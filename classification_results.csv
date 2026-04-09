@@ -1,0 +1,101 @@
+id,text,label,predicted_label,score
+1,"Agendei ultrassom, mas apareceu conflito com outra consulta. Quero mudar a data.",Falar sobre agendamento de exame,Tenho sintomas e preciso de atendimento com profissional de saúde,0.35714036226272583
+2,Inclusão de dependente Minha esposa está grávida e a previsão do nascimento é pro final do mês que vem,Inclusão ou exclusão de dependentes,Inclusão ou exclusão de dependentes,0.6470818519592285
+3,"dor na garganta, olho muito vermelho e lacrimejando muito, febre as vezes",Tenho sintomas e preciso de atendimento com profissional de saúde,Tenho sintomas e preciso de atendimento com profissional de saúde,0.581511378288269
+4,Minha criança está com dificuldade para respirar e fazendo “estridor” (barulho ao inspirar).,Estou numa emergência de saúde,Tenho sintomas e preciso de atendimento com profissional de saúde,0.7667866349220276
+5,Reembolso de consulta no pronto Socorro,Quero tirar dúvida sobre reembolso,Quero tirar dúvida sobre reembolso,0.16782766580581665
+6,"especialista nao carrega a agenda, fica só rodando 😕",Falar sobre agendamento de uma consulta com médico especialista,Falar sobre agendamento de uma consulta com médico especialista,0.49999502301216125
+7,Minha consulta com especialista está marcada? Pode confirmar para mim?,Falar sobre agendamento de uma consulta com médico especialista,Quero indicação ou ajuda para encontrar um médico na rede credenciada,0.4958531856536865
+8,"Boa tarde thdi bem? Estou na cidade de Torres, no Rio Grande do Sul Queria passar em um ginecologista urgente",Quero indicação ou ajuda para encontrar um médico na rede credenciada,Estou numa emergência de saúde,0.2628949284553528
+9,Quero cancelar o plano hoje. Qual o prazo para efetivar?,Cancelar plano,Cancelar plano,0.478544682264328
+10,Tem neurologista credenciado na rede em Osasco? Pode listar algumas opções?,Quero indicação ou ajuda para encontrar um médico na rede credenciada,Quero indicação ou ajuda para encontrar um médico na rede credenciada,0.550818145275116
+11,"Terceira vez que o sistema trava, isso está atrapalhando muito.",Críticas ou sugestões,Tenho sintomas e preciso de atendimento com profissional de saúde,0.28196796774864197
+12,Janeiro. Cobrança indevida em 2 meses consecutivos,Entender valores do boleto,Críticas ou sugestões,0.2497107833623886
+13,Esse médico específico (Dr. João Silva) atende pela rede? Como verifico?,Quero indicação ou ajuda para encontrar um médico na rede credenciada,Quero indicação ou ajuda para encontrar um médico na rede credenciada,0.3096277117729187
+14,quero saber se dr [NOME] atende pela cassi,Quero indicação ou ajuda para encontrar um médico na rede credenciada,Quero indicação ou ajuda para encontrar um médico na rede credenciada,0.3349100649356842
+15,Por telefone não consigo agendar no laboratório. Vocês conseguem marcar pra mim?,Falar sobre agendamento de exame,Falar sobre agendamento de exame,0.3109853267669678
+16,"Desde domingo tenho feito consultas on-line e presencias, Sobre umas feridas no anus. Os médicos disseram q era assadura, mas estou passando a pomada e não tá resolvendo Ontem começaram a nascer bolinhas tbm Não sei oq é mas estou com medo",Tenho sintomas e preciso de atendimento com profissional de saúde,Tenho sintomas e preciso de atendimento com profissional de saúde,0.5555867552757263
+17,Por que minha mensalidade veio mais cara este mês? Queria entender a composição do valor.,Entender valores do boleto,Críticas ou sugestões,0.2654588520526886
+18,Qual a tabela de reembolso para consulta com especialista?,Quero tirar dúvida sobre reembolso,Quero indicação ou ajuda para encontrar um médico na rede credenciada,0.48818039894104004
+19,Eu fiz um exame de olhos e paguei o exame gostaria de saber se tem reembolso se sim como proceder,Quero tirar dúvida sobre reembolso,Falar sobre agendamento de exame,0.2466798722743988
+20,"Sinto minha laringe com queimação, e tive refluxos",Tenho sintomas e preciso de atendimento com profissional de saúde,Tenho sintomas e preciso de atendimento com profissional de saúde,0.5962955951690674
+21,"Nota 10 pro suporte, fui bem atendido!",Críticas ou sugestões,Estou numa emergência de saúde,0.21863849461078644
+22,Tenho direito a reembolso? Como funciona?,Quero tirar dúvida sobre reembolso,Quero tirar dúvida sobre reembolso,0.248555526137352
+23,"Estou grávida e gostaria de saber como funciona a inclusão da minha neném no plano após o nascimento, se tem carência para ela",Inclusão ou exclusão de dependentes,Inclusão ou exclusão de dependentes,0.29534560441970825
+24,Queria entender se esse valor já inclui taxas/ajustes previstos no contrato.,Entender valores do boleto,Críticas ou sugestões,0.2187151461839676
+25,Existe prazo máximo para solicitar reembolso depois da consulta/exame?,Quero tirar dúvida sobre reembolso,Falar sobre agendamento de uma consulta com médico especialista,0.19382953643798828
+26,especialista [NOME] que ja passei nao tem agenda nos proximos 30 dias vai ser cobrado coparticipação,Falar sobre agendamento de uma consulta com médico especialista,Falar sobre agendamento de uma consulta com médico especialista,0.42688292264938354
+27,Estou com consulta marcada com especialista e a opção presencial desapareceu. Como resolver?,Falar sobre agendamento de uma consulta com médico especialista,Falar sobre agendamento de uma consulta com médico especialista,0.35166674852371216
+28,Quem pode ser meu dependente? Mãe e irmã podem?,Inclusão ou exclusão de dependentes,Inclusão ou exclusão de dependentes,0.48507192730903625
+29,Olá estou com dor no joelho,Tenho sintomas e preciso de atendimento com profissional de saúde,Tenho sintomas e preciso de atendimento com profissional de saúde,0.352377325296402
+30,Reembolso de pronto-socorro: é possível? Quais documentos preciso?,Quero tirar dúvida sobre reembolso,Quero tirar dúvida sobre reembolso,0.22868116199970245
+31,"Estou com dor no peito e sensação de desmaio, visão escurecendo.",Estou numa emergência de saúde,Tenho sintomas e preciso de atendimento com profissional de saúde,0.7204629778862
+32,"Boa tarde, Quero ver a possibilidade de acrescentar minha mãe no plano q tenho. Preciso de uma confirmação se é viável para que faça q alteração contratual incluindo ela na empresa",Inclusão ou exclusão de dependentes,Entender valores do boleto,0.25635117292404175
+33,Quero cancelar plano,Cancelar plano,Cancelar plano,0.26311683654785156
+34,Quanto eu pago por cada pessoa no plano (titular e dependentes)? Preciso dos valores individuais.,Entender valores do boleto,Inclusão ou exclusão de dependentes,0.3909521698951721
+35,meu medico nao me mandou a receita,Críticas ou sugestões,Tenho sintomas e preciso de atendimento com profissional de saúde,0.27939116954803467
+36,"Agendei a consulta com especialista, recebi confirmação, mas o horário ficou diferente do que selecionei e preciso ajustar.",Falar sobre agendamento de uma consulta com médico especialista,Tenho sintomas e preciso de atendimento com profissional de saúde,0.294381707906723
+37,Tosse a 3 semanas,Tenho sintomas e preciso de atendimento com profissional de saúde,Críticas ou sugestões,0.13671229779720306
+38,"Estou com febre alta, dor no peito e confusão, sinto que vou desmaiar.",Estou numa emergência de saúde,Tenho sintomas e preciso de atendimento com profissional de saúde,0.6187453866004944
+39,quero remarcar o exame pq nao vou conseguir ir 😕,Falar sobre agendamento de exame,Tenho sintomas e preciso de atendimento com profissional de saúde,0.22946538031101227
+40,Queria entender o valor cobrado,Entender valores do boleto,Entender valores do boleto,0.6832812428474426
+41,"A atendente acabou de me informa, depois de ter feito a ficha. Que eles não realizam raio-x para escoliose.",Críticas ou sugestões,Críticas ou sugestões,0.16545476019382477
+42,"Olá, Eu queria saber como é o procedimento de exclusão de um dependente da minha conta/cnpj",Inclusão ou exclusão de dependentes,Inclusão ou exclusão de dependentes,0.32386258244514465
+43,Solicito o reagendamento do exame agendado para [DATA] por indisponibilidade de comparecimento.,Falar sobre agendamento de exame,Tenho sintomas e preciso de atendimento com profissional de saúde,0.25059574842453003
+44,"No boleto aparece [VALOR] a mais, isso é o quê?",Entender valores do boleto,Entender valores do boleto,0.6006293296813965
+45,"Olá boa tarde , estou tendo problema, então decidi vim aqui. vê se consigo pedir o cancelamento por aqui.",Cancelar plano,Tenho sintomas e preciso de atendimento com profissional de saúde,0.4741290211677551
+46,Estou com dor testicular intensa e súbita. É emergência?,Estou numa emergência de saúde,Tenho sintomas e preciso de atendimento com profissional de saúde,0.6855413317680359
+47,Febre de 40 e dor no corpo,Tenho sintomas e preciso de atendimento com profissional de saúde,Quero tirar dúvida sobre reembolso,0.2662110924720764
+48,Estou com muita dor e so achei 2 opções de fisiatra sendo que so tem agenda dia 28,Falar sobre agendamento de uma consulta com médico especialista,Tenho sintomas e preciso de atendimento com profissional de saúde,0.2771240174770355
+49,Estou com pensamentos de me matar e já tenho um plano. Preciso de ajuda agora.,Estou numa emergência de saúde,Tenho sintomas e preciso de atendimento com profissional de saúde,0.3431161344051361
+50,Me programei pra fazer a consulta no horário marcado e a médica não apareceu,Críticas ou sugestões,Falar sobre agendamento de uma consulta com médico especialista,0.4780637323856354
+51,Olá eu tinha uma consulta agora com minha médica de família às 10:40 mas estava dando erro quando consegui entrar ninguém estava na sala digita. Estou tentando mandar msg por aqui mas trava o sistema,Críticas ou sugestões,Quero indicação ou ajuda para encontrar um médico na rede credenciada,0.3359856903553009
+52,Quero cancelar meu plano. Como faço?,Cancelar plano,Cancelar plano,0.5498009324073792
+53,"Só aparece uma opção de data muito longe e não consigo ver outras agendas, parece bug.",Falar sobre agendamento de uma consulta com médico especialista,Quero tirar dúvida sobre reembolso,0.25590017437934875
+54,Consegue verificar se o exame do meu filho está agendado e qual o horário?,Falar sobre agendamento de exame,Falar sobre agendamento de exame,0.2808988690376282
+55,Preenchi o formulário de cancelamento e não recebi e-mail de confirmação.,Cancelar plano,Inclusão ou exclusão de dependentes,0.25335854291915894
+56,Oi tudo bem? Queria adicionar minha namorada ao meu plano Alice Quais as opcoes para fazer isso? Como conjuge E quanto pagarei a mais Ela tem 21 anos e nenhuma doenca preexistente,Inclusão ou exclusão de dependentes,Inclusão ou exclusão de dependentes,0.28939923644065857
+57,"Solicitei cancelamento, mas não sei se foi registrado. Podem confirmar?",Cancelar plano,Quero tirar dúvida sobre reembolso,0.17906950414180756
+58,Tenho dúvidas sobre reembolso de terapia,Quero tirar dúvida sobre reembolso,Críticas ou sugestões,0.3013536036014557
+59,quero agendar com o clinico geral,Quero indicação ou ajuda para encontrar um médico na rede credenciada,Quero indicação ou ajuda para encontrar um médico na rede credenciada,0.41005340218544006
+60,Preciso solicitar cancelamento do plano por aqui. É possível?,Cancelar plano,Cancelar plano,0.5291428565979004
+61,Olho irritado,Tenho sintomas e preciso de atendimento com profissional de saúde,Críticas ou sugestões,0.3737334609031677
+62,Quero manter só o titular no plano e retirar os outros participantes. Como proceder?,Inclusão ou exclusão de dependentes,Cancelar plano,0.33671101927757263
+63,"Marcaram meu exame errado, preciso desmarcar e reagendar certinho.",Falar sobre agendamento de exame,Tenho sintomas e preciso de atendimento com profissional de saúde,0.5072096586227417
+64,Dor abdominal e diarreia,Tenho sintomas e preciso de atendimento com profissional de saúde,Tenho sintomas e preciso de atendimento com profissional de saúde,0.6275476217269897
+65,eu gostaria de saber como funciona o reembolso,Quero tirar dúvida sobre reembolso,Quero tirar dúvida sobre reembolso,0.2043919712305069
+66,Olá boa noite tudo bem? Preciso agendar oftalmologista para meu bebê de 1 ano tem essa especialidade?,Quero indicação ou ajuda para encontrar um médico na rede credenciada,Quero indicação ou ajuda para encontrar um médico na rede credenciada,0.32436403632164
+67,"Preciso cancelar o exame agendado de [DATA], não vou conseguir ir.",Falar sobre agendamento de exame,Cancelar plano,0.31668174266815186
+68,"Já fiz o preparo e o exame não aconteceu, preciso reagendar o mais rápido possível.",Falar sobre agendamento de exame,Falar sobre agendamento de exame,0.21207506954669952
+69,"Tosse, mialgia, febre desde ontem A febre abaixou com uso de dipirona Mantém a dor no corpo e muita tosse",Tenho sintomas e preciso de atendimento com profissional de saúde,Tenho sintomas e preciso de atendimento com profissional de saúde,0.5783537030220032
+70,"O atendimento demorou muito e ninguém me deu retorno, bem frustrante.",Críticas ou sugestões,Falar sobre agendamento de exame,0.256275475025177
+71,"Minha consulta com especialista está marcada e meu encaminhamento expirou, como atualizo no fluxo?",Falar sobre agendamento de uma consulta com médico especialista,Falar sobre agendamento de uma consulta com médico especialista,0.31942757964134216
+72,Tomei muitos comprimidos de propósito. Preciso de ajuda urgente.,Estou numa emergência de saúde,Tenho sintomas e preciso de atendimento com profissional de saúde,0.5576945543289185
+73,"Dor muito forte com piora rápida, não sei o que fazer, é emergência?",Estou numa emergência de saúde,Tenho sintomas e preciso de atendimento com profissional de saúde,0.3795376121997833
+74,"Sinusite mal curada. Dor na testa, e fundo dos olhos.",Tenho sintomas e preciso de atendimento com profissional de saúde,Tenho sintomas e preciso de atendimento com profissional de saúde,0.5117493867874146
+75,"Saturação deu [VALOR] e tô com muita falta de ar, é caso de ambulância?",Estou numa emergência de saúde,Tenho sintomas e preciso de atendimento com profissional de saúde,0.6238186359405518
+76,"Queria sugerir que o suporte avisasse melhor sobre prazos e status, falta transparência.",Críticas ou sugestões,Críticas ou sugestões,0.34723490476608276
+77,Cancelar plano,Cancelar plano,Cancelar plano,0.47362861037254333
+78,Eu preciso saber o que eu pago por cada membro do plano,Entender valores do boleto,Entender valores do boleto,0.252461314201355
+79,Para marcar oftalmologista: quais são as opções e horários disponíveis?,Falar sobre agendamento de uma consulta com médico especialista,Falar sobre agendamento de uma consulta com médico especialista,0.34707680344581604
+80,Gostaria de confirmar o agendamento do exame [NOME] e o endereço do local.,Falar sobre agendamento de exame,Falar sobre agendamento de exame,0.4653482735157013
+81,Dá pra manter os irmãos com o mesmo pediatra por aqui?,Quero indicação ou ajuda para encontrar um médico na rede credenciada,Quero indicação ou ajuda para encontrar um médico na rede credenciada,0.3325781226158142
+82,"Atendimento ruim demais, sempre demora e ninguém resolve nada.",Críticas ou sugestões,Críticas ou sugestões,0.3367924690246582
+83,quero saber se a [NOME] atende em pindamonhangaba pela cassi,Quero indicação ou ajuda para encontrar um médico na rede credenciada,Tenho sintomas e preciso de atendimento com profissional de saúde,0.19739334285259247
+84,Quero incluir minha filha como dependente no plano. Como faço?,Inclusão ou exclusão de dependentes,Inclusão ou exclusão de dependentes,0.3779197633266449
+85,"Eu solicitei o cancelamento do plano com vocês, com data fim 15/01. No entanto, eu recebi o boleto que tem período de vigência 11/01 até 10/02. Ou seja, com valor integral sendo que eu utilizarei apenas 4 dias deste período.",Entender valores do boleto,Cancelar plano,0.5005437731742859
+86,Quero cancelar o plano e entender se existe fidelidade/penalidade.,Cancelar plano,Cancelar plano,0.6502971053123474
+87,"Olá, gostaria de saber sobre a inclusão da minha filha como faço?",Inclusão ou exclusão de dependentes,Inclusão ou exclusão de dependentes,0.41438257694244385
+88,Tem reembolso pra pronto-socorro? Qual a lista de documentos?,Quero tirar dúvida sobre reembolso,Quero tirar dúvida sobre reembolso,0.23524314165115356
+89,Tentativa de suicídio.,Estou numa emergência de saúde,Tenho sintomas e preciso de atendimento com profissional de saúde,0.6889976263046265
+90,Quero saber se reembolsa consulta particular e como faço a solicitação.,Quero tirar dúvida sobre reembolso,Falar sobre agendamento de uma consulta com médico especialista,0.30044764280319214
+91,"Estou com febre alta e rigidez no pescoço, muita dor de cabeça e luz incomoda.",Estou numa emergência de saúde,Tenho sintomas e preciso de atendimento com profissional de saúde,0.6670645475387573
+92,"Oftalmologia, preciso uma consulta com oftalmologista que atenda bebê. Cidade de São Paulo Preferência pela zona leste.",Quero indicação ou ajuda para encontrar um médico na rede credenciada,Entender valores do boleto,0.2612348794937134
+93,Por que o boleto veio mais caro este mês?,Entender valores do boleto,Entender valores do boleto,0.5266079306602478
+94,Preciso de um ortopedista credenciado na rede em Barueri/Alphaville.,Quero indicação ou ajuda para encontrar um médico na rede credenciada,Quero indicação ou ajuda para encontrar um médico na rede credenciada,0.20855315029621124
+95,"Cancelar plano, Como saber o valor da multa antes ?",Cancelar plano,Cancelar plano,0.5781310200691223
+96,O valor do boleto não bate com o que eu esperava. Pode me explicar de onde veio?,Entender valores do boleto,Entender valores do boleto,0.5792635679244995
+97,Preço passar no ortopedista novamente,Falar sobre agendamento de uma consulta com médico especialista,Tenho sintomas e preciso de atendimento com profissional de saúde,0.19963999092578888
+98,quero saber se tenho algum exame agendado,Falar sobre agendamento de exame,Falar sobre agendamento de exame,0.3959500193595886
+99,Mais uma vez o sistema me enganou e eu perdi dias por causa do preparo do exame.,Críticas ou sugestões,Tenho sintomas e preciso de atendimento com profissional de saúde,0.3196614682674408
+100,Cadastra dependente,Inclusão ou exclusão de dependentes,Tenho sintomas e preciso de atendimento com profissional de saúde,0.22256670892238617
