@@ -14,6 +14,8 @@ import time
 import gradio as gr
 import pandas as pd
 import requests
+import tempfile
+
 
 API_URL = os.getenv("API_URL", "http://localhost:8000")
 
@@ -31,21 +33,23 @@ LABEL_EMOJI = {
 }
 
 
+
 def classify_csv(file, progress=gr.Progress(track_tqdm=True)):
     if file is None:
-        return None, "⚠️ Nenhum arquivo enviado.", ""
+        return None, "⚠️ Nenhum arquivo enviado.", "", None
 
     # --- Load CSV ---
     try:
         df = pd.read_csv(file.name)
     except Exception as e:
-        return None, f"❌ Erro ao ler o CSV: {e}", ""
+        return None, f"❌ Erro ao ler o CSV: {e}", "", None
 
     if "text" not in df.columns:
         return (
             None,
             "❌ O CSV precisa ter uma coluna chamada **`text`**.",
             "",
+            None,
         )
 
     texts = df["text"].fillna("").tolist()
@@ -87,6 +91,10 @@ def classify_csv(file, progress=gr.Progress(track_tqdm=True)):
     elapsed = time.perf_counter() - t0
     result_df = pd.DataFrame(results)
 
+    # 🔽 NOVO: salvar CSV temporário
+    tmp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".csv")
+    result_df.to_csv(tmp_file.name, index=False, encoding="utf-8-sig")
+
     # --- Summary ---
     success = total - errors
     summary = (
@@ -95,7 +103,6 @@ def classify_csv(file, progress=gr.Progress(track_tqdm=True)):
         f"{'⚠️ ' + str(errors) + ' erros' if errors else '0 erros'}"
     )
 
-    # Category distribution for the stats box
     if success > 0:
         counts = (
             result_df[~result_df["Categoria"].str.startswith("⚠️")]["Categoria"]
@@ -110,7 +117,8 @@ def classify_csv(file, progress=gr.Progress(track_tqdm=True)):
     else:
         dist_md = ""
 
-    return result_df, summary, dist_md
+    # 🔽 retorna também o arquivo
+    return result_df, summary, dist_md, tmp_file.name
 
 
 # ─────────────────────────────────────────────
@@ -292,11 +300,12 @@ with gr.Blocks(css=CSS, title="Classificador de Tickets") as demo:
                 wrap=True,
                 elem_id="results-table",
             )
+            download_file = gr.File(label="📥 Baixar resultados em CSV")
 
     classify_btn.click(
-        fn=classify_csv,
-        inputs=[file_input],
-        outputs=[results_out, summary_out, stats_out],
+    fn=classify_csv,
+    inputs=[file_input],
+    outputs=[results_out, summary_out, stats_out, download_file],
     )
 
 if __name__ == "__main__":

@@ -5,4 +5,7 @@ pydantic>=2.7.0
 pandas
 scikit-learn
 requests>=2.31.0
-gradio
+gradio>=4.20.0
+matplotlib
+reportlab>=4.1.0
+numpy
