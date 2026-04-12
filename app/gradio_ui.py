@@ -16,6 +16,23 @@ import pandas as pd
 import requests
 import tempfile
 
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
+
+import matplotlib.pyplot as plt
+
+import hashlib
+
+# 🔧 patch para erro do reportlab no Windows
+_original_md5 = hashlib.md5
+
+def md5_compat(*args, **kwargs):
+    kwargs.pop("usedforsecurity", None)
+    return _original_md5(*args, **kwargs)
+
+hashlib.md5 = md5_compat
+
 
 API_URL = os.getenv("API_URL", "http://localhost:8000")
 
@@ -32,11 +49,123 @@ LABEL_EMOJI = {
     "Tenho sintomas e preciso de atendimento com profissional de saúde": "🤒",
 }
 
+def generate_charts(df):
+    import tempfile
 
+    latencies = pd.to_numeric(df["Latência (ms)"], errors="coerce").dropna()
+
+    counts = (
+        df[~df["Categoria"].str.startswith("⚠️")]["Categoria"]
+        .value_counts()
+    )
+
+    # 🔽 gráfico 1: distribuição de categorias
+    fig1 = plt.figure()
+    counts.plot(kind="barh")
+    plt.xlabel("Quantidade")
+    plt.ylabel("Categoria")
+    plt.title("Distribuição por categoria")
+    plt.tight_layout()
+
+    chart1 = tempfile.NamedTemporaryFile(delete=False, suffix=".png")
+    plt.savefig(chart1.name)
+    plt.close(fig1)
+
+    # 🔽 gráfico 2: histograma de latência
+    fig2 = plt.figure()
+    plt.hist(latencies, bins=10)
+    plt.xlabel("Latência (ms)")
+    plt.ylabel("Frequência")
+    plt.title("Distribuição de latência")
+    plt.tight_layout()
+
+    chart2 = tempfile.NamedTemporaryFile(delete=False, suffix=".png")
+    plt.savefig(chart2.name)
+    plt.close(fig2)
+
+    return chart1.name, chart2.name
+
+def generate_pdf_report(df, elapsed, total, errors):
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image
+    from reportlab.lib import colors
+    from reportlab.lib.styles import getSampleStyleSheet
+    import tempfile
+
+    styles = getSampleStyleSheet()
+
+    latencies = pd.to_numeric(df["Latência (ms)"], errors="coerce").dropna()
+    avg_latency = latencies.mean() if len(latencies) > 0 else 0
+
+    counts = (
+        df[~df["Categoria"].str.startswith("⚠️")]["Categoria"]
+        .value_counts()
+        .reset_index()
+    )
+    counts.columns = ["Categoria", "Qtd"]
+
+    # 🔽 gerar gráficos
+    chart1_path, chart2_path = generate_charts(df)
+
+    pdf_file = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf")
+    doc = SimpleDocTemplate(pdf_file.name)
+
+    elements = []
+
+    # 🔽 título
+    elements.append(Paragraph("Relatório de Classificação", styles["Title"]))
+    elements.append(Spacer(1, 12))
+
+    # 🔽 resumo
+    elements.append(Paragraph(f"Total de mensagens: {total}", styles["Normal"]))
+    elements.append(Paragraph(f"Classificadas: {total - errors}", styles["Normal"]))
+    elements.append(Paragraph(f"Erros: {errors}", styles["Normal"]))
+    elements.append(Paragraph(f"Latência média: {avg_latency:.1f} ms", styles["Normal"]))
+    elements.append(Paragraph(f"Tempo total: {elapsed:.2f} s", styles["Normal"]))
+    elements.append(Spacer(1, 16))
+
+    # 🔽 gráfico 1
+    elements.append(Paragraph("Distribuição por categoria", styles["Heading2"]))
+    elements.append(Image(chart1_path, width=400, height=200))
+    elements.append(Spacer(1, 16))
+
+    # 🔽 gráfico 2
+    elements.append(Paragraph("Distribuição de latência", styles["Heading2"]))
+    elements.append(Image(chart2_path, width=400, height=200))
+    elements.append(Spacer(1, 16))
+
+    # 🔽 tabela de distribuição
+    elements.append(Paragraph("Tabela de categorias", styles["Heading2"]))
+    table_data = [["Categoria", "Qtd"]] + counts.values.tolist()
+
+    table = Table(table_data)
+    table.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), colors.grey),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+        ("GRID", (0, 0), (-1, -1), 0.5, colors.black),
+    ]))
+
+    elements.append(table)
+    elements.append(Spacer(1, 16))
+
+    # 🔽 tabela detalhada (amostra)
+    # elements.append(Paragraph("Resultados (amostra)", styles["Heading2"]))
+    # sample_df = df.head(20)
+    # table_data = [sample_df.columns.tolist()] + sample_df.values.tolist()
+
+    # table = Table(table_data)
+    # table.setStyle(TableStyle([
+    #     ("GRID", (0, 0), (-1, -1), 0.25, colors.black),
+    # ]))
+
+    # elements.append(table)
+
+    doc.build(elements)
+
+    return pdf_file.name
 
 def classify_csv(file, progress=gr.Progress(track_tqdm=True)):
     if file is None:
-        return None, "⚠️ Nenhum arquivo enviado.", "", None
+        return None, "⚠️ Nenhum arquivo enviado.", "", None, None
 
     # --- Load CSV ---
     try:
@@ -118,7 +247,8 @@ def classify_csv(file, progress=gr.Progress(track_tqdm=True)):
         dist_md = ""
 
     # 🔽 retorna também o arquivo
-    return result_df, summary, dist_md, tmp_file.name
+    pdf_path = generate_pdf_report(result_df, elapsed, total, errors)
+    return result_df, summary, dist_md, tmp_file.name, pdf_path
 
 
 # ─────────────────────────────────────────────
@@ -301,11 +431,12 @@ with gr.Blocks(css=CSS, title="Classificador de Tickets") as demo:
                 elem_id="results-table",
             )
             download_file = gr.File(label="📥 Baixar resultados em CSV")
+            download_pdf = gr.File(label="📄 Baixar relatório em PDF")
 
     classify_btn.click(
     fn=classify_csv,
     inputs=[file_input],
-    outputs=[results_out, summary_out, stats_out, download_file],
+    outputs=[results_out, summary_out, stats_out, download_file, download_pdf],
     )
 
 if __name__ == "__main__":
