@@ -43,8 +43,6 @@ classifier = pipeline(
 results = []
 
 for i, row in data.iterrows():
-    print(f"Processando linha {i}...")
-
     try:
         result = classifier(
             row['text'],
@@ -60,7 +58,6 @@ for i, row in data.iterrows():
         })
 
     except Exception as e:
-        print(f"Erro na linha {i}: {e}")
         results.append({
             "predicted_label": None,
             "score": None
@@ -74,5 +71,3 @@ results_df = pd.DataFrame(results)
 final_df = pd.concat([data, results_df], axis=1)
 
 final_df.to_csv("classification_results.csv", index=False)
-
-print("Processamento concluído!")
