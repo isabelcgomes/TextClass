@@ -4,7 +4,7 @@ gradio_ui.py — Interface Gradio para o classificador de tickets de suporte.
 Uso:
     python app/gradio_ui.py
 
-Por padrão, conecta na API em http://localhost:8000.
+Por padrão, conecta na API em http://localhost:7860.
 Para outro endereço: API_URL=http://... python app/gradio_ui.py
 """
 
@@ -21,6 +21,8 @@ from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
 
 import matplotlib.pyplot as plt
+
+import json
 
 import hashlib
 
@@ -48,6 +50,84 @@ LABEL_EMOJI = {
     "Quero tirar dúvida sobre reembolso": "💳",
     "Tenho sintomas e preciso de atendimento com profissional de saúde": "🤒",
 }
+
+
+def evaluate_dataset(file, progress=gr.Progress(track_tqdm=True)):
+    if file is None:
+        return None, "⚠️ Nenhum arquivo enviado.", None
+
+    try:
+        df = pd.read_csv(file.name)
+    except Exception as e:
+        return None, f"Erro ao ler CSV: {e}", None
+
+    required_cols = {"id", "text", "label"}
+    if not required_cols.issubset(df.columns):
+        return None, "CSV precisa ter colunas: id, text, label", None
+
+    results = []
+
+    for i, row in enumerate(progress.tqdm(df.itertuples(), total=len(df))):
+        try:
+            resp = requests.post(
+                f"{API_URL}/classify",
+                json={"text": row.text},
+                timeout=30,
+            ).json()
+
+            results.append({
+                "id": row.id,
+                "text": row.text,
+                "true_label": row.label,
+                "predicted_label": resp["predicted_label"],
+                "latency_ms": resp["latency_ms"],
+                "correct": resp["predicted_label"] == row.label,
+            })
+
+        except Exception as e:
+            results.append({
+                "id": row.id,
+                "text": row.text,
+                "true_label": row.label,
+                "predicted_label": None,
+                "latency_ms": None,
+                "correct": False,
+            })
+
+    results_df = pd.DataFrame(results)
+
+    # 🔽 métricas simples
+    valid = results_df.dropna(subset=["predicted_label"])
+
+    accuracy = (valid["true_label"] == valid["predicted_label"]).mean()
+
+    latency = pd.to_numeric(valid["latency_ms"], errors="coerce")
+    avg_latency = latency.mean()
+
+    summary_md = f"""
+### 📊 Métricas
+
+- Accuracy: **{accuracy:.2%}**
+- Total: **{len(results_df)}**
+- Latência média: **{avg_latency:.1f} ms**
+"""
+
+    # 🔽 salvar JSON
+    tmp_json = tempfile.NamedTemporaryFile(delete=False, suffix=".json")
+
+    report = {
+        "summary": {
+            "accuracy": float(accuracy),
+            "total": int(len(results_df)),
+            "avg_latency": float(avg_latency),
+        },
+        "predictions": results_df.to_dict(orient="records"),
+    }
+
+    with open(tmp_json.name, "w", encoding="utf-8") as f:
+        json.dump(report, f, ensure_ascii=False, indent=2)
+
+    return results_df, summary_md, tmp_json.name
 
 def generate_charts(df):
     import tempfile
@@ -200,10 +280,12 @@ def classify_csv(file, progress=gr.Progress(track_tqdm=True)):
             label = data["predicted_label"]
             latency = data["latency_ms"]
             emoji = LABEL_EMOJI.get(label, "🏷️")
+            score = data.get("predicted_score", None)
             results.append(
                 {
                     "Texto original": text,
                     "Categoria": f"{emoji} {label}",
+                    "Score": f"{score:.2%}" if score is not None else "—",
                     "Latência (ms)": f"{latency:.0f}",
                 }
             )
@@ -213,6 +295,7 @@ def classify_csv(file, progress=gr.Progress(track_tqdm=True)):
                 {
                     "Texto original": text,
                     "Categoria": f"⚠️ Erro: {e}",
+                    "Score": "—",
                     "Latência (ms)": "—",
                 }
             )
@@ -263,8 +346,8 @@ CSS = """
     --surface: #14181e;
     --surface2: #1c2128;
     --border: #2a3140;
-    --accent: #00e5a0;
-    --accent2: #0099ff;
+    --accent: #BE0380;
+    --accent2: #BE0380;
     --warn: #ff4f4f;
     --text: #e8ecf0;
     --muted: #6b7888;
@@ -390,54 +473,87 @@ label, .label-wrap { color: var(--muted) !important; font-size: 0.78rem !importa
 
 with gr.Blocks(css=CSS, title="Classificador de Tickets") as demo:
 
-    gr.HTML("""
-    <div id="header">
-        <h1>Ticket <span>Classifier</span></h1>
-        <p>health plan support · llm-powered · zero-shot</p>
-    </div>
-    """)
+    with gr.Tabs():
 
-    with gr.Row():
-        # ── Left column: inputs ──────────────────────────────
-        with gr.Column(scale=1, min_width=280):
-            gr.HTML("<p style='color:#6b7888;font-size:0.78rem;font-family:DM Mono,monospace;margin:0 0 8px;'>ENTRADA</p>")
-            file_input = gr.File(
-                label="Arquivo CSV (coluna `text` obrigatória)",
-                file_types=[".csv"],
-                elem_classes=["upload-zone"],
+        # ─────────────────────────────
+        # 🟢 ABA 1: CLASSIFICAÇÃO
+        # ─────────────────────────────
+        with gr.Tab("Classificação"):
+
+            gr.HTML("""
+            <div id="header">
+                <h1>Ticket <span>Classifier</span></h1>
+                <p>Avaliação de Tickets de Suporte · llm-powered · zero-shot</p>
+            </div>
+            """)
+
+            with gr.Row():
+                # ── Left column: inputs ──────────────────────────────
+                with gr.Column(scale=1, min_width=280):
+                    gr.HTML("<p style='color:#6b7888;font-size:0.78rem;font-family:DM Mono,monospace;margin:0 0 8px;'>ENTRADA</p>")
+                    file_input = gr.File(
+                        label="Arquivo CSV (coluna `text` obrigatória)",
+                        file_types=[".csv"],
+                        elem_classes=["upload-zone"],
+                    )
+                    classify_btn = gr.Button(
+                        "▶  Classificar",
+                        elem_id="classify-btn",
+                        variant="primary",
+                    )
+                    summary_out = gr.Markdown(
+                        value="",
+                        elem_id="summary",
+                    )
+                    stats_out = gr.Markdown(
+                        value="",
+                        elem_id="stats",
+                    )
+
+                # ── Right column: results ────────────────────────────
+                with gr.Column(scale=3):
+                    gr.HTML("<p style='color:#6b7888;font-size:0.78rem;font-family:DM Mono,monospace;margin:0 0 8px;'>RESULTADOS</p>")
+                    results_out = gr.DataFrame(
+                        headers=["Texto original", "Categoria", "Score", "Latência (ms)"],
+                        datatype=["str", "str", "str", "str"],
+                        interactive=False,
+                        wrap=True,
+                        elem_id="results-table",
+                    )
+                    download_file = gr.File(label="📥 Baixar resultados em CSV")
+                    download_pdf = gr.File(label="📄 Baixar relatório em PDF")
+
+            classify_btn.click(
+            fn=classify_csv,
+            inputs=[file_input],
+            outputs=[results_out, summary_out, stats_out, download_file, download_pdf],
             )
-            classify_btn = gr.Button(
-                "▶  Classificar",
-                elem_id="classify-btn",
-                variant="primary",
-            )
-            summary_out = gr.Markdown(
-                value="",
-                elem_id="summary",
-            )
-            stats_out = gr.Markdown(
-                value="",
-                elem_id="stats",
+        
+        # ─────────────────────────────
+        # 🔵 ABA 2: AVALIAÇÃO
+        # ─────────────────────────────
+        with gr.Tab("Avaliação"):
+
+            gr.Markdown("## Avaliação do modelo")
+
+            eval_file = gr.File(
+                label="Dataset CSV (colunas: id, text, label)",
+                file_types=[".csv"]
             )
 
-        # ── Right column: results ────────────────────────────
-        with gr.Column(scale=3):
-            gr.HTML("<p style='color:#6b7888;font-size:0.78rem;font-family:DM Mono,monospace;margin:0 0 8px;'>RESULTADOS</p>")
-            results_out = gr.DataFrame(
-                headers=["Texto original", "Categoria", "Latência (ms)"],
-                datatype=["str", "str", "str"],
-                interactive=False,
-                wrap=True,
-                elem_id="results-table",
-            )
-            download_file = gr.File(label="📥 Baixar resultados em CSV")
-            download_pdf = gr.File(label="📄 Baixar relatório em PDF")
+            eval_btn = gr.Button("▶ Rodar avaliação")
 
-    classify_btn.click(
-    fn=classify_csv,
-    inputs=[file_input],
-    outputs=[results_out, summary_out, stats_out, download_file, download_pdf],
-    )
+            eval_summary = gr.Markdown()
+            eval_table = gr.DataFrame()
+            eval_download = gr.File(label="📥 Baixar relatório JSON")
+
+            eval_btn.click(
+                fn=evaluate_dataset,
+                inputs=[eval_file],
+                outputs=[eval_table, eval_summary, eval_download],
+            )
+
+    
 
 if __name__ == "__main__":
     demo.launch(server_name="0.0.0.0", server_port=7860, show_api=False)

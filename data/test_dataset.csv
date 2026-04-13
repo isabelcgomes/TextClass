@@ -1,0 +1,11 @@
+id,text,label
+1,"Agendei ultrassom, mas apareceu conflito com outra consulta. Quero mudar a data.",Falar sobre agendamento de exame
+2,"Inclusão de dependente Minha esposa está grávida e a previsão do nascimento é pro final do mês que vem",Inclusão ou exclusão de dependentes
+3,"dor na garganta, olho muito vermelho e lacrimejando muito, febre as vezes",Tenho sintomas e preciso de atendimento com profissional de saúde
+4,Minha criança está com dificuldade para respirar e fazendo “estridor” (barulho ao inspirar).,Estou numa emergência de saúde
+5,Reembolso de consulta no pronto Socorro,Quero tirar dúvida sobre reembolso
+6,"especialista nao carrega a agenda, fica só rodando 😕",Falar sobre agendamento de uma consulta com médico especialista
+7,Minha consulta com especialista está marcada? Pode confirmar para mim?,Falar sobre agendamento de uma consulta com médico especialista
+9,Quero cancelar o plano hoje. Qual o prazo para efetivar?,Cancelar plano
+10,Tem neurologista credenciado na rede em Osasco? Pode listar algumas opções?,Quero indicação ou ajuda para encontrar um médico na rede credenciada
+100,Cadastra dependente,Inclusão ou exclusão de dependentes

@@ -3,7 +3,7 @@ evaluate.py — Batch evaluation of the classifier against the labeled dataset.
 
 Usage:
     python scripts/evaluate.py \
-        --dataset data/classification_dataset.csv \
+        --dataset data/test_dataset.csv \
         --output  reports/evaluation_report.json \
         --api-url http://localhost:8000
 """
@@ -28,6 +28,53 @@ from sklearn.metrics import (
 # Helpers
 # ---------------------------------------------------------------------------
 
+def generate_markdown_report(metrics: dict) -> str:
+    s = metrics["summary"]
+    lat = metrics["latency"]
+    labels = metrics["confusion_matrix"]["labels"]
+    pc = metrics["per_class"]
+
+    md = []
+    md.append("# 📊 Evaluation Report\n")
+
+    md.append("## 📌 Summary\n")
+    md.append(f"- Samples evaluated: **{s['evaluated']} / {s['total_samples']}**")
+    md.append(f"- Errors: **{s['errors']}**")
+    md.append(f"- Invalid labels: **{s['invalid_label_predictions']}**")
+    md.append(f"- Accuracy: **{s['accuracy']:.2%}**")
+    md.append(f"- Macro F1: **{s['macro_f1']:.2%}**")
+    md.append(f"- Weighted F1: **{s['weighted_f1']:.2%}**\n")
+
+    md.append("## ⏱️ Latency\n")
+    md.append(
+        f"- Mean: **{lat['mean_ms']} ms** | "
+        f"P50: **{lat['p50_ms']} ms** | "
+        f"P90: **{lat['p90_ms']} ms** | "
+        f"P99: **{lat['p99_ms']} ms**\n"
+    )
+
+    md.append("## 🧠 Per-class F1\n")
+
+    for label in labels:
+        row = pc.get(label, {})
+        f1 = row.get("f1-score", 0)
+        support = row.get("support", 0)
+        bar = "█" * int(f1 * 20)
+
+        md.append(
+            f"- **{label}** → {f1:.2f} `{bar:<20}` (support: {support})"
+        )
+
+    if metrics["top_confusions"]:
+        md.append("\n## ⚠️ Top Misclassifications\n")
+        for pair in metrics["top_confusions"][:5]:
+            md.append(
+                f"- **{pair['true']}** → *{pair['predicted']}* "
+                f"({pair['count']}x)"
+            )
+
+    return "\n".join(md)
+
 def classify_text(text: str, api_url: str) -> dict:
     """Call the /classify endpoint and return the full response dict."""
     response = requests.post(
@@ -49,14 +96,15 @@ def run_batch(df: pd.DataFrame, api_url: str) -> pd.DataFrame:
         try:
             resp = classify_text(row["text"], api_url)
             results.append({
-                "id": row["id"],
-                "text": row["text"],
-                "true_label": row["label"],
-                "predicted_label": resp["predicted_label"],
-                "is_valid_label": resp["is_valid_label"],
-                "latency_ms": resp["latency_ms"],
-                "error": None,
-            })
+                    "id": row["id"],
+                    "text": row["text"],
+                    "true_label": row["label"],
+                    "predicted_label": resp["predicted_label"],
+                    "predicted_score": resp.get("predicted_score"),
+                    "is_valid_label": resp["is_valid_label"],
+                    "latency_ms": resp["latency_ms"],
+                    "error": None,
+                })
             match = "✓" if resp["predicted_label"] == row["label"] else "✗"
             print(f'{match}  pred="{resp["predicted_label"]}"')
         except Exception as exc:  # noqa: BLE001
@@ -66,6 +114,7 @@ def run_batch(df: pd.DataFrame, api_url: str) -> pd.DataFrame:
                 "text": row["text"],
                 "true_label": row["label"],
                 "predicted_label": None,
+                "predicted_score": None,
                 "is_valid_label": False,
                 "latency_ms": None,
                 "error": str(exc),
@@ -176,7 +225,7 @@ def print_report(metrics: dict) -> None:
         f1 = row.get("f1-score", 0)
         support = row.get("support", 0)
         bar = "█" * int(f1 * 20)
-        print(f"  {f1:.2f} {bar:<20}  [{support:2d}]  {label}")
+        print(f"  {f1:.2f} {bar:<20}  [{support:2f}]  {label}")
 
     if metrics["top_confusions"]:
         print("\n  TOP MISCLASSIFICATIONS")
@@ -193,7 +242,7 @@ def print_report(metrics: dict) -> None:
 
 def main():
     parser = argparse.ArgumentParser(description="Evaluate the classifier in batch.")
-    parser.add_argument("--dataset", default="data/classification_dataset.csv")
+    parser.add_argument("--dataset", default="data/test_dataset.csv")
     parser.add_argument("--output", default="reports/evaluation_report.json")
     parser.add_argument("--api-url", default="http://localhost:8000")
     args = parser.parse_args()
@@ -222,6 +271,14 @@ def main():
 
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
+    
+    md_report = generate_markdown_report(metrics)
+
+    md_path = output_path.with_suffix(".md")
+    with open(md_path, "w", encoding="utf-8") as f:
+        f.write(md_report)
+
+    print(f"Markdown report saved to: {md_path}")
 
     print(f"Report saved to: {output_path}")
 

@@ -13,7 +13,7 @@ Classificador automático de tickets de suporte de plano de saúde usando LLM (C
 | Classificação | Zero-shot com system prompt | Rápido de iterar; o prompt é versionável como código |
 | Métricas | Accuracy + Macro F1 + Confusion Matrix | Dataset balanceado → accuracy é representativa; F1 por classe expõe onde o modelo erra |
 
-**Por que não fine-tuning?** Com apenas 100 exemplos (10 por classe), fine-tuning é frágil e propenso a overfitting. O LLM zero-shot com bom prompt performa melhor e é trivial de atualizar.
+**Por que não fine-tuning?** Tendo como contexto somente os dados de exemplo, com apenas 100 amostras, não seria interessante realizar um processo de adaptação por sua fragilidade quanto a overfitting. 
 
 ---
 
@@ -23,11 +23,12 @@ Classificador automático de tickets de suporte de plano de saúde usando LLM (C
 classifier/
 ├── app/
 │   └── main.py          # FastAPI app (endpoint /classify)
+│   └── gradio_ui.py     # Interface gráfica feita em gradio para executar a classificação e a avaliação em batch dos dados
 ├── scripts/
 │   └── evaluate.py      # Avaliação em batch + geração de report
 ├── data/
 │   └── classification_dataset.csv
-├── reports/             # Criado automaticamente pelo evaluate.py
+├── reports/             # Criado automaticamente pelo evaluate.py (se executado diretamente)
 ├── requirements.txt
 └── README.md
 ```
@@ -42,13 +43,7 @@ classifier/
 pip install -r requirements.txt
 ```
 
-### 2. Configurar a chave da API
-
-```bash
-export ANTHROPIC_API_KEY="sk-ant-..."
-```
-
-### 3. Subir a API
+### 2. Subir a API
 
 ```bash
 uvicorn app.main:app --reload
@@ -58,6 +53,7 @@ uvicorn app.main:app --reload
 python app/gradio_ui.py
 ```
 
+*IMPORTANTE: Ao subir pela primeira vez a API app.main:app acontece o download do modelo facebook/bart-large-mnli pelo huggingface, portanto, a disponibilização da API pela primeira vez pode atrasar em até 5 minutos a depender da conexão com a internet*
 
 A API estará disponível em `http://localhost:8000`.
 
@@ -81,6 +77,7 @@ Classifica uma mensagem de suporte.
 ```json
 {
   "predicted_label": "Estou numa emergência de saúde",
+  "predicted_score": 0.8571,
   "is_valid_label": true,
   "latency_ms": 412.5
 }
@@ -94,15 +91,36 @@ Lista todas as categorias válidas.
 
 Healthcheck da API.
 
+
+## Interface
+
+A interface da aplicação no Gradio é dividida em duas abas.
+
+### Classificação
+
+A aba **Classificação** permite:
+- a visualização dos resultados
+- o download de um arquivo CSV com as classificações e scores para cada texto de entrada
+- o download de um relatório simples em PDF com o resumo das classificações realizadas na entrada de texto realiada
+
+### Alaviação
+
+A aba **Avaliação** permite:
+- a visualização dos resultados
+- o download de um arquivo json com o resultado das classificações das entradas de texto
+
+
 ---
 
 ## Avaliação em batch (Parte 2)
+
+Também disponível na aba "Avaliação" da interface gráfica com Gradio
 
 Com a API rodando, execute:
 
 ```bash
 python scripts/evaluate.py \
-    --dataset data/classification_dataset.csv \
+    --dataset data/test_dataset.csv \
     --output  reports/evaluation_report.json \
     --api-url http://localhost:8000
 ```
@@ -117,8 +135,7 @@ O script:
    - Matriz de confusão completa
    - Top erros de classificação
    - Estatísticas de latência (mean, P50, P90, P99)
-
-**Exemplo de output no terminal:**
+5. Gera um report em `reports/evaluation_report.md` com:
 
 ```
 =================================================================

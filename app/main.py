@@ -36,6 +36,7 @@ class ClassifyRequest(BaseModel):
 
 class ClassifyResponse(BaseModel):
     predicted_label: str
+    predicted_score: float
     is_valid_label: bool
     latency_ms: float
 
@@ -58,9 +59,11 @@ def classify(request: ClassifyRequest):
     latency_ms = (time.perf_counter() - start) * 1000
 
     predicted_label = result["labels"][0]
+    predicted_score = result["scores"][0]
 
     return ClassifyResponse(
         predicted_label=predicted_label,
+        predicted_score=round(predicted_score, 4),
         is_valid_label=predicted_label in VALID_LABELS,
         latency_ms=round(latency_ms, 2),
     )
