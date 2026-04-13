@@ -162,6 +162,7 @@ O script:
 
 ---
 
+
 ## Métricas escolhidas e justificativa
 
 | Métrica | Por quê |
