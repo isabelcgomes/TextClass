@@ -189,7 +189,21 @@ Além disso, a cada nova inserção no código, todo o funcionamento da soluçã
 
 Em uma solução mais completa e robsuta pode acontecer uma inviabilidade da execução de testes manuais em todo o sistema, nesse caso existe a possibilidade da realização de testes automatizados e da modularização do desenvolvimento, aqui eu quero dizer compartimentalização, de forma que a alteração em um componente do código afete o mínimo possível módulos distintos da solução e sua utilização em outros módulos seja rastreável, de forma que o impacto de uma alteração na solução completa seja, também, rastreável e controlado.
 
-### Observabilidade
+Resumindo, além de controlar as alterações, não permitindo a alteração de arquivos inteiros, por exemplo, uma boa prática é a implementação de um pipeline de CI/CD para as alterações de código e versionamento.
+
+### Versionamento
+
+#### Prompt como código
+Fazendo parte da solução, qualquer prompt utilizado com o modelo de classificação também deve ser versionado e avaliado antes de entrar em produção, assim como um código passa por uma pipeline de CI/CD o prompt também deve passar, nesse caso.
+
+Eu entendo versionamento de soluções baseadas em IA muito próximo de observabilidade, até por uma questão de boas práticas em MLOps:
+
+
+
+
+- Rodar o `evaluate.py` como CI gate: qualquer alteração no prompt deve manter valores de acurácia acima da meta (limiar, threshold...)
+
+#### Observabilidade
 
 Aqui eu sou a favor de guardar todos os logs da solução, pelo menos por um período relevante de tempo (com relevante eu quero dizer um período suficiente para identificar mudanças de comportamento da solução, mas não exagerado a ponto de afetar na memória ou armazenamento do ambiente)
 
@@ -204,14 +218,6 @@ Aqui, com informações de execução eu quero dizer:
 - Status de resposta de APIs
 - Monitoramento de respostas da LLM (de classificação)
   - Isso foi implementado no código por meio de uma variável: `is_valid_label` que indica se o modelo está utilizando somente as categorias já definidas no escopo ou está criando categorias novas, esse comportamento deve ser observado como um indicativo de alucinação do classificador o que pode comprometer a confiabilidade da solução
-
-### Versionamento
-
-#### Prompt como código
-Fazendo parte da solução, qualquer prompt utilizado com o modelo de classificação também deve ser versionado e avaliado antes de entrar em produção
-- System prompt versionado no repositório Git
-- Rodar o `evaluate.py` como CI gate: qualquer alteração no prompt deve manter valores de acurácia acima da meta (limiar, threshold...)
-
 
 ### Alternativas de modelagem
 
