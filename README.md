@@ -60,6 +60,7 @@ A API estará disponível em `http://localhost:8000`.
 Documentação interativa: `http://localhost:8000/docs`
 
 A interface abre em `http://localhost:7860`.
+
 ---
 
 ## Endpoints
