@@ -175,21 +175,51 @@ O script:
 
 ---
 
-## Discussão: rumo à produção
+## Decisões e motivação
+
+### Interface
+
+A interface construída em gradio foi escolhida dessa froma pela simplicidade e pela facilidade em testar a aplicação em uma solução simples. Levando para produção, a decisão de interface mudaria para se adequar a outros sistemas já existentes para se adequar às práticas já adotadas e padronizadas de UX e UI.
+
+### Práticas de coding com AI
+
+Para garantir que todo o código funcionasse corretamente no final, a principal estratégia adotada foi a separação do problema em partes menores e endereçáveis como funções específicas e reaproveitáveis.
+
+Além disso, a cada nova inserção no código, todo o funcionamento da solução foi re-testado para garantir a integração correta de todo o sistema. 
+
+Em uma solução mais completa e robsuta pode acontecer uma inviabilidade da execução de testes manuais em todo o sistema, nesse caso existe a possibilidade da realização de testes automatizados e da modularização do desenvolvimento, aqui eu quero dizer compartimentalização, de forma que a alteração em um componente do código afete o mínimo possível módulos distintos da solução e sua utilização em outros módulos seja rastreável, de forma que o impacto de uma alteração na solução completa seja, também, rastreável e controlado.
 
 ### Observabilidade
-- Logar cada request: `text`, `predicted_label`, `is_valid_label`, `latency_ms`, timestamp
-- Alertar quando `is_valid_label = false` (o modelo "inventou" uma categoria)
-- Dashboard de drift: monitorar distribuição de categorias ao longo do tempo
 
-### Prompt como código
-- O system prompt vive no repositório Git — cada mudança é um commit
-- Rodar o `evaluate.py` como CI gate: qualquer alteração no prompt deve manter accuracy ≥ threshold
+Aqui eu sou a favor de guardar todos os logs da solução, pelo menos por um período relevante de tempo (com relevante eu quero dizer um período suficiente para identificar mudanças de comportamento da solução, mas não exagerado a ponto de afetar na memória ou armazenamento do ambiente)
+
+Nesse caso, aqui eu não necessariamente guardaria o resultado dos modelos, manteria isso em versionamento com a aplicação de conceitos de MLOps para definir o desenvolvimento e lançamento de versões diferentes do modelo, mas guardaria as informações de execução em cada uma das funções e APIs da solução completa.
+
+Aqui, com informações de execução eu quero dizer:
+- Entrada e saída da função ou API
+- Latência
+- Warnings de execução
+- Erros de execução
+- Timestamp da execução
+- Status de resposta de APIs
+- Monitoramento de respostas da LLM (de classificação)
+  - Isso foi implementado no código por meio de uma variável: `is_valid_label` que indica se o modelo está utilizando somente as categorias já definidas no escopo ou está criando categorias novas, esse comportamento deve ser observado como um indicativo de alucinação do classificador o que pode comprometer a confiabilidade da solução
+
+### Versionamento
+
+#### Prompt como código
+Fazendo parte da solução, qualquer prompt utilizado com o modelo de classificação também deve ser versionado e avaliado antes de entrar em produção
+- System prompt versionado no repositório Git
+- Rodar o `evaluate.py` como CI gate: qualquer alteração no prompt deve manter valores de acurácia acima da meta (limiar, threshold...)
+
 
 ### Alternativas de modelagem
-- **Few-shot**: incluir 1–2 exemplos por classe no prompt melhora casos limítrofes
-- **Embeddings + classificador linear**: mais rápido e barato, mas requer dados rotulados suficientes
-- **Fine-tuning**: viável se o volume de dados crescer para milhares de exemplos
+
+Devido à quantidade de amostras disponíveis, a modelagem da solução foi a **Zero-Shot**, uma forma de melhorar a qualidade da solução (em termos de precisão e acurácia) é trocando o método de treinamento do modelo para alternativas como:
+
+- **Few-shot**: para reduzir a quantidade de classificações incorretas entre classes similares e com alto overlay de definição (exemplo: **Falar sobre agendamento de uma consulta com médico especialista** e *Quero indicação ou ajuda para encontrar um médico na rede credenciada*)
+- **Fine-tuning**: pensando em uma solução já escalada com volumes de dados mais expressivos
+- Caso a ideia seja utilizar modelos mais clássicos de classificação, também é possível utilizar modelos de NLP classificados com métodos mais clássicos de ML. Solução essa também pensada para cenários mais escalados devido o volume de dados necessário para possibilitar o treinamento e teste do modelo mais clássico
 
 ### Confiança e fallback
 - Adicionar um campo `confidence` ao response (pedir ao LLM que retorne JSON com `label` + `confidence`)
