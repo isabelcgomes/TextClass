@@ -8,7 +8,7 @@ Classificador automático de tickets de suporte de plano de saúde usando LLM (C
 
 | Componente | Escolha | Justificativa |
 |---|---|---|
-| LLM | Claude (Anthropic) | Zero-shot com prompt estruturado supera modelos menores treinados nos 100 exemplos disponíveis |
+| LLM | Meta - Bart Large MNLI | Zero-shot com prompt estruturado supera modelos menores treinados nos 100 exemplos disponíveis |
 | Framework | FastAPI | Tipagem nativa com Pydantic, docs automáticas via Swagger, alto desempenho |
 | Classificação | Zero-shot com system prompt | Rápido de iterar; o prompt é versionável como código |
 | Métricas | Accuracy + Macro F1 + Confusion Matrix | Dataset balanceado → accuracy é representativa; F1 por classe expõe onde o modelo erra |
@@ -53,7 +53,7 @@ uvicorn app.main:app --reload
 python app/gradio_ui.py
 ```
 
-*IMPORTANTE: Ao subir pela primeira vez a API app.main:app acontece o download do modelo facebook/bart-large-mnli pelo huggingface, portanto, a disponibilização da API pela primeira vez pode atrasar em até 5 minutos a depender da conexão com a internet*
+*IMPORTANTE: Ao subir pela primeira vez a API app.main:app acontece o download do modelo facebook/bart-large-mnli pelo huggingface, portanto, a disponibilização da API pela primeira vez pode atrasar em até 10 minutos*
 
 A API estará disponível em `http://localhost:8000`.
 
