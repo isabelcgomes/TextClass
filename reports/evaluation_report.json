@@ -1,0 +1,253 @@
+{
+  "generated_at": "2026-04-12T15:57:48.976216Z",
+  "api_url": "http://localhost:8000",
+  "dataset": "data/test_dataset.csv",
+  "metrics": {
+    "summary": {
+      "total_samples": 10,
+      "evaluated": 8,
+      "errors": 2,
+      "invalid_label_predictions": 2,
+      "accuracy": 0.625,
+      "macro_f1": 0.5833,
+      "weighted_f1": 0.6042
+    },
+    "per_class": {
+      "Cancelar plano": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 1.0
+      },
+      "Falar sobre agendamento de exame": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 1.0
+      },
+      "Falar sobre agendamento de uma consulta com médico especialista": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1-score": 0.6666666666666666,
+        "support": 2.0
+      },
+      "Inclusão ou exclusão de dependentes": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1-score": 0.6666666666666666,
+        "support": 2.0
+      },
+      "Quero indicação ou ajuda para encontrar um médico na rede credenciada": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1-score": 0.6666666666666666,
+        "support": 1.0
+      },
+      "Tenho sintomas e preciso de atendimento com profissional de saúde": {
+        "precision": 0.3333333333333333,
+        "recall": 1.0,
+        "f1-score": 0.5,
+        "support": 1.0
+      },
+      "accuracy": 0.625,
+      "macro avg": {
+        "precision": 0.638888888888889,
+        "recall": 0.6666666666666666,
+        "f1-score": 0.5833333333333333,
+        "support": 8.0
+      },
+      "weighted avg": {
+        "precision": 0.7291666666666666,
+        "recall": 0.625,
+        "f1-score": 0.6041666666666666,
+        "support": 8.0
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "Cancelar plano",
+        "Falar sobre agendamento de exame",
+        "Falar sobre agendamento de uma consulta com médico especialista",
+        "Inclusão ou exclusão de dependentes",
+        "Quero indicação ou ajuda para encontrar um médico na rede credenciada",
+        "Tenho sintomas e preciso de atendimento com profissional de saúde"
+      ],
+      "matrix": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    "top_confusions": [
+      {
+        "true": "Falar sobre agendamento de exame",
+        "predicted": "Tenho sintomas e preciso de atendimento com profissional de saúde",
+        "count": 1
+      },
+      {
+        "true": "Falar sobre agendamento de uma consulta com médico especialista",
+        "predicted": "Quero indicação ou ajuda para encontrar um médico na rede credenciada",
+        "count": 1
+      },
+      {
+        "true": "Inclusão ou exclusão de dependentes",
+        "predicted": "Tenho sintomas e preciso de atendimento com profissional de saúde",
+        "count": 1
+      }
+    ],
+    "latency": {
+      "mean_ms": 3090.1,
+      "p50_ms": 3047.8,
+      "p90_ms": 3867.8,
+      "p99_ms": 4057.9,
+      "max_ms": 4079.0
+    }
+  },
+  "predictions": [
+    {
+      "id": 1,
+      "text": "Agendei ultrassom, mas apareceu conflito com outra consulta. Quero mudar a data.",
+      "true_label": "Falar sobre agendamento de exame",
+      "predicted_label": "Tenho sintomas e preciso de atendimento com profissional de saúde",
+      "predicted_score": 0.3571,
+      "is_valid_label": true,
+      "latency_ms": 3120.37,
+      "error": null
+    },
+    {
+      "id": 2,
+      "text": "Inclusão de dependente Minha esposa está grávida e a previsão do nascimento é pro final do mês que vem",
+      "true_label": "Inclusão ou exclusão de dependentes",
+      "predicted_label": "Inclusão ou exclusão de dependentes",
+      "predicted_score": 0.6471,
+      "is_valid_label": true,
+      "latency_ms": 3334.05,
+      "error": null
+    },
+    {
+      "id": 3,
+      "text": "dor na garganta, olho muito vermelho e lacrimejando muito, febre as vezes",
+      "true_label": "Tenho sintomas e preciso de atendimento com profissional de saúde",
+      "predicted_label": "Tenho sintomas e preciso de atendimento com profissional de saúde",
+      "predicted_score": 0.5815,
+      "is_valid_label": true,
+      "latency_ms": 2544.89,
+      "error": null
+    },
+    {
+      "id": 4,
+      "text": "Minha criança está com dificuldade para respirar e fazendo “estridor” (barulho ao inspirar).",
+      "true_label": "Estou numa emergência de saúde",
+      "predicted_label": null,
+      "predicted_score": NaN,
+      "is_valid_label": false,
+      "latency_ms": NaN,
+      "error": "HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /classify (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000266FCFCC310>: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente'))"
+    },
+    {
+      "id": 5,
+      "text": "Reembolso de consulta no pronto Socorro",
+      "true_label": "Quero tirar dúvida sobre reembolso",
+      "predicted_label": null,
+      "predicted_score": NaN,
+      "is_valid_label": false,
+      "latency_ms": NaN,
+      "error": "HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /classify (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x00000266FCFCCC10>: Failed to establish a new connection: [WinError 10061] Nenhuma conexão pôde ser feita porque a máquina de destino as recusou ativamente'))"
+    },
+    {
+      "id": 6,
+      "text": "especialista nao carrega a agenda, fica só rodando 😕",
+      "true_label": "Falar sobre agendamento de uma consulta com médico especialista",
+      "predicted_label": "Falar sobre agendamento de uma consulta com médico especialista",
+      "predicted_score": 0.5,
+      "is_valid_label": true,
+      "latency_ms": 4078.97,
+      "error": null
+    },
+    {
+      "id": 7,
+      "text": "Minha consulta com especialista está marcada? Pode confirmar para mim?",
+      "true_label": "Falar sobre agendamento de uma consulta com médico especialista",
+      "predicted_label": "Quero indicação ou ajuda para encontrar um médico na rede credenciada",
+      "predicted_score": 0.4959,
+      "is_valid_label": true,
+      "latency_ms": 3777.36,
+      "error": null
+    },
+    {
+      "id": 9,
+      "text": "Quero cancelar o plano hoje. Qual o prazo para efetivar?",
+      "true_label": "Cancelar plano",
+      "predicted_label": "Cancelar plano",
+      "predicted_score": 0.4785,
+      "is_valid_label": true,
+      "latency_ms": 2975.17,
+      "error": null
+    },
+    {
+      "id": 10,
+      "text": "Tem neurologista credenciado na rede em Osasco? Pode listar algumas opções?",
+      "true_label": "Quero indicação ou ajuda para encontrar um médico na rede credenciada",
+      "predicted_label": "Quero indicação ou ajuda para encontrar um médico na rede credenciada",
+      "predicted_score": 0.5508,
+      "is_valid_label": true,
+      "latency_ms": 2906.07,
+      "error": null
+    },
+    {
+      "id": 100,
+      "text": "Cadastra dependente",
+      "true_label": "Inclusão ou exclusão de dependentes",
+      "predicted_label": "Tenho sintomas e preciso de atendimento com profissional de saúde",
+      "predicted_score": 0.2226,
+      "is_valid_label": true,
+      "latency_ms": 1984.02,
+      "error": null
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+id,text,label
+1,"Agendei ultrassom, mas apareceu conflito com outra consulta. Quero mudar a data.",Falar sobre agendamento de exame
+2,"Inclusão de dependente
+Minha esposa está grávida e a previsão do nascimento é pro final do mês que vem",Inclusão ou exclusão de dependentes
+3,"dor na garganta, olho muito vermelho e lacrimejando muito, febre as vezes",Tenho sintomas e preciso de atendimento com profissional de saúde
+4,Minha criança está com dificuldade para respirar e fazendo “estridor” (barulho ao inspirar).,Estou numa emergência de saúde
+5,Reembolso de consulta no pronto Socorro,Quero tirar dúvida sobre reembolso
+6,"especialista nao carrega a agenda, fica só rodando 😕",Falar sobre agendamento de uma consulta com médico especialista
+7,Minha consulta com especialista está marcada? Pode confirmar para mim?,Falar sobre agendamento de uma consulta com médico especialista
+8,"Boa tarde thdi bem?
+Estou na cidade de Torres, no Rio Grande do Sul 
+Queria passar em um ginecologista urgente",Quero indicação ou ajuda para encontrar um médico na rede credenciada
+9,Quero cancelar o plano hoje. Qual o prazo para efetivar?,Cancelar plano
+10,Tem neurologista credenciado na rede em Osasco? Pode listar algumas opções?,Quero indicação ou ajuda para encontrar um médico na rede credenciada
+11,"Terceira vez que o sistema trava, isso está atrapalhando muito.",Críticas ou sugestões
+12,Janeiro. Cobrança indevida em 2 meses consecutivos,Entender valores do boleto
+13,Esse médico específico (Dr. João Silva) atende pela rede? Como verifico?,Quero indicação ou ajuda para encontrar um médico na rede credenciada
+14,quero saber se dr [NOME] atende pela cassi,Quero indicação ou ajuda para encontrar um médico na rede credenciada
+15,Por telefone não consigo agendar no laboratório. Vocês conseguem marcar pra mim?,Falar sobre agendamento de exame
+16,"Desde domingo tenho feito consultas on-line e presencias,
+Sobre umas feridas no anus.
+Os médicos disseram q era assadura, mas estou passando a pomada e não tá resolvendo 
+
+Ontem começaram a nascer bolinhas tbm
+Não sei oq é mas estou com medo",Tenho sintomas e preciso de atendimento com profissional de saúde
+17,Por que minha mensalidade veio mais cara este mês? Queria entender a composição do valor.,Entender valores do boleto
+18,Qual a tabela de reembolso para consulta com especialista?,Quero tirar dúvida sobre reembolso
+19,Eu fiz um exame de olhos e paguei o exame gostaria de saber se tem reembolso se sim como proceder,Quero tirar dúvida sobre reembolso
+20,"Sinto minha laringe com queimação, e tive refluxos",Tenho sintomas e preciso de atendimento com profissional de saúde
+21,"Nota 10 pro suporte, fui bem atendido!",Críticas ou sugestões
+22,Tenho direito a reembolso? Como funciona?,Quero tirar dúvida sobre reembolso
+23,"Estou grávida e gostaria de saber como funciona a inclusão da minha neném no plano após o nascimento, se tem carência para ela",Inclusão ou exclusão de dependentes
+24,Queria entender se esse valor já inclui taxas/ajustes previstos no contrato.,Entender valores do boleto
+25,Existe prazo máximo para solicitar reembolso depois da consulta/exame?,Quero tirar dúvida sobre reembolso
+26,especialista [NOME] que ja passei nao tem agenda nos proximos 30 dias vai ser cobrado coparticipação,Falar sobre agendamento de uma consulta com médico especialista
+27,Estou com consulta marcada com especialista e a opção presencial desapareceu. Como resolver?,Falar sobre agendamento de uma consulta com médico especialista
+28,Quem pode ser meu dependente? Mãe e irmã podem?,Inclusão ou exclusão de dependentes
+29,Olá estou com dor no joelho,Tenho sintomas e preciso de atendimento com profissional de saúde
+30,Reembolso de pronto-socorro: é possível? Quais documentos preciso?,Quero tirar dúvida sobre reembolso
+31,"Estou com dor no peito e sensação de desmaio, visão escurecendo.",Estou numa emergência de saúde
+32,"Boa tarde,
+Quero ver a possibilidade de acrescentar minha mãe no plano q tenho.
+Preciso de uma confirmação se é viável para que faça q alteração contratual incluindo ela na empresa",Inclusão ou exclusão de dependentes
+33,Quero cancelar plano,Cancelar plano
+34,Quanto eu pago por cada pessoa no plano (titular e dependentes)? Preciso dos valores individuais.,Entender valores do boleto
+35,meu medico nao me mandou a receita,Críticas ou sugestões
+36,"Agendei a consulta com especialista, recebi confirmação, mas o horário ficou diferente do que selecionei e preciso ajustar.",Falar sobre agendamento de uma consulta com médico especialista
+37,Tosse a 3 semanas,Tenho sintomas e preciso de atendimento com profissional de saúde
+38,"Estou com febre alta, dor no peito e confusão, sinto que vou desmaiar.",Estou numa emergência de saúde
+39,quero remarcar o exame pq nao vou conseguir ir 😕,Falar sobre agendamento de exame
+40,Queria entender o valor cobrado,Entender valores do boleto
+41,"A atendente acabou de me informa, depois de ter feito a ficha. Que eles não realizam raio-x para escoliose.",Críticas ou sugestões
+42,"Olá, 
+Eu queria saber como é o procedimento de exclusão de um dependente da minha conta/cnpj",Inclusão ou exclusão de dependentes
+43,Solicito o reagendamento do exame agendado para [DATA] por indisponibilidade de comparecimento.,Falar sobre agendamento de exame
+44,"No boleto aparece [VALOR] a mais, isso é o quê?",Entender valores do boleto
+45,"Olá boa tarde , estou tendo problema, então decidi vim aqui. vê se consigo pedir o cancelamento por aqui.",Cancelar plano
+46,Estou com dor testicular intensa e súbita. É emergência?,Estou numa emergência de saúde
+47,Febre de 40 e dor no corpo,Tenho sintomas e preciso de atendimento com profissional de saúde
+48,Estou com muita dor e so achei 2 opções de fisiatra sendo que so tem agenda dia 28,Falar sobre agendamento de uma consulta com médico especialista
+49,Estou com pensamentos de me matar e já tenho um plano. Preciso de ajuda agora.,Estou numa emergência de saúde
+50,Me programei pra fazer a consulta no horário marcado e a médica não apareceu,Críticas ou sugestões
+51,Olá eu tinha uma consulta agora com minha médica de família às 10:40 mas estava dando erro quando consegui entrar ninguém estava na sala digita. Estou tentando mandar msg por aqui mas trava o sistema,Críticas ou sugestões
+52,Quero cancelar meu plano. Como faço?,Cancelar plano
+53,"Só aparece uma opção de data muito longe e não consigo ver outras agendas, parece bug.",Falar sobre agendamento de uma consulta com médico especialista
+54,Consegue verificar se o exame do meu filho está agendado e qual o horário?,Falar sobre agendamento de exame
+55,Preenchi o formulário de cancelamento e não recebi e-mail de confirmação.,Cancelar plano
+56,"Oi tudo bem?
+Queria adicionar minha namorada ao meu plano Alice
+Quais as opcoes para fazer isso? Como conjuge
+E quanto pagarei a mais
+Ela tem 21 anos e nenhuma doenca preexistente",Inclusão ou exclusão de dependentes
+57,"Solicitei cancelamento, mas não sei se foi registrado. Podem confirmar?",Cancelar plano
+58,Tenho dúvidas sobre reembolso de terapia,Quero tirar dúvida sobre reembolso
+59,quero agendar com o clinico geral,Quero indicação ou ajuda para encontrar um médico na rede credenciada
+60,Preciso solicitar cancelamento do plano por aqui. É possível?,Cancelar plano
+61,Olho irritado,Tenho sintomas e preciso de atendimento com profissional de saúde
+62,Quero manter só o titular no plano e retirar os outros participantes. Como proceder?,Inclusão ou exclusão de dependentes
+63,"Marcaram meu exame errado, preciso desmarcar e reagendar certinho.",Falar sobre agendamento de exame
+64,Dor abdominal e diarreia,Tenho sintomas e preciso de atendimento com profissional de saúde
+65,eu gostaria de saber como funciona o reembolso,Quero tirar dúvida sobre reembolso
+66,"Olá boa noite tudo bem?
+
+Preciso agendar oftalmologista para meu bebê de 1 ano tem essa especialidade?",Quero indicação ou ajuda para encontrar um médico na rede credenciada
+67,"Preciso cancelar o exame agendado de [DATA], não vou conseguir ir.",Falar sobre agendamento de exame
+68,"Já fiz o preparo e o exame não aconteceu, preciso reagendar o mais rápido possível.",Falar sobre agendamento de exame
+69,"Tosse, mialgia, febre desde ontem
+A febre abaixou com uso de dipirona
+Mantém a dor no corpo e muita tosse",Tenho sintomas e preciso de atendimento com profissional de saúde
+70,"O atendimento demorou muito e ninguém me deu retorno, bem frustrante.",Críticas ou sugestões
+71,"Minha consulta com especialista está marcada e meu encaminhamento expirou, como atualizo no fluxo?",Falar sobre agendamento de uma consulta com médico especialista
+72,Tomei muitos comprimidos de propósito. Preciso de ajuda urgente.,Estou numa emergência de saúde
+73,"Dor muito forte com piora rápida, não sei o que fazer, é emergência?",Estou numa emergência de saúde
+74,"Sinusite mal curada. Dor na testa, e fundo dos olhos.",Tenho sintomas e preciso de atendimento com profissional de saúde
+75,"Saturação deu [VALOR] e tô com muita falta de ar, é caso de ambulância?",Estou numa emergência de saúde
+76,"Queria sugerir que o suporte avisasse melhor sobre prazos e status, falta transparência.",Críticas ou sugestões
+77,Cancelar plano,Cancelar plano
+78,Eu preciso saber o que eu pago por cada membro do plano,Entender valores do boleto
+79,Para marcar oftalmologista: quais são as opções e horários disponíveis?,Falar sobre agendamento de uma consulta com médico especialista
+80,Gostaria de confirmar o agendamento do exame [NOME] e o endereço do local.,Falar sobre agendamento de exame
+81,Dá pra manter os irmãos com o mesmo pediatra por aqui?,Quero indicação ou ajuda para encontrar um médico na rede credenciada
+82,"Atendimento ruim demais, sempre demora e ninguém resolve nada.",Críticas ou sugestões
+83,quero saber se a [NOME] atende em pindamonhangaba pela cassi,Quero indicação ou ajuda para encontrar um médico na rede credenciada
+84,Quero incluir minha filha como dependente no plano. Como faço?,Inclusão ou exclusão de dependentes
+85,"Eu solicitei o cancelamento do plano com vocês, com data fim 15/01. No entanto, eu recebi o boleto que tem período de vigência 11/01 até 10/02. Ou seja, com valor integral sendo que eu utilizarei apenas 4 dias deste período.",Entender valores do boleto
+86,Quero cancelar o plano e entender se existe fidelidade/penalidade.,Cancelar plano
+87,"Olá, gostaria de saber sobre a inclusão da minha filha como faço?",Inclusão ou exclusão de dependentes
+88,Tem reembolso pra pronto-socorro? Qual a lista de documentos?,Quero tirar dúvida sobre reembolso
+89,Tentativa de suicídio.,Estou numa emergência de saúde
+90,Quero saber se reembolsa consulta particular e como faço a solicitação.,Quero tirar dúvida sobre reembolso
+91,"Estou com febre alta e rigidez no pescoço, muita dor de cabeça e luz incomoda.",Estou numa emergência de saúde
+92,"Oftalmologia, preciso uma consulta com oftalmologista que atenda bebê. 
+Cidade de São Paulo 
+Preferência pela zona leste.",Quero indicação ou ajuda para encontrar um médico na rede credenciada
+93,Por que o boleto veio mais caro este mês?,Entender valores do boleto
+94,Preciso de um ortopedista credenciado na rede em Barueri/Alphaville.,Quero indicação ou ajuda para encontrar um médico na rede credenciada
+95,"Cancelar plano, Como saber o valor da multa antes ?",Cancelar plano
+96,O valor do boleto não bate com o que eu esperava. Pode me explicar de onde veio?,Entender valores do boleto
+97,Preço passar no ortopedista novamente,Falar sobre agendamento de uma consulta com médico especialista
+98,quero saber se tenho algum exame agendado,Falar sobre agendamento de exame
+99,Mais uma vez o sistema me enganou e eu perdi dias por causa do preparo do exame.,Críticas ou sugestões
+100,Cadastra dependente,Inclusão ou exclusão de dependentes
