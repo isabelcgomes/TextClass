@@ -103,12 +103,15 @@ A aba **Classificação** permite:
 - o download de um arquivo CSV com as classificações e scores para cada texto de entrada
 - o download de um relatório simples em PDF com o resumo das classificações realizadas na entrada de texto realiada
 
-### Alaviação
+![](images/classificacao_gradio.png)
+
+### Avaliação
 
 A aba **Avaliação** permite:
 - a visualização dos resultados
 - o download de um arquivo json com o resultado das classificações das entradas de texto
 
+![](images/avaliacao_gradio.png)
 
 ---
 
@@ -198,16 +201,15 @@ Fazendo parte da solução, qualquer prompt utilizado com o modelo de classifica
 
 Eu entendo versionamento de soluções baseadas em IA muito próximo de observabilidade, até por uma questão de boas práticas em MLOps:
 
+![](images/mlops-loop-en.jpg)
 
-
-
-- Rodar o `evaluate.py` como CI gate: qualquer alteração no prompt deve manter valores de acurácia acima da meta (limiar, threshold...)
+Inclusive, é possível a utilização do código `evaluate.py` como um CI gate para uma primeira etapa de monitoramento, pelo menos do monitoramento do comportamento do modelo de classificação levando à primeira etapa de um MLOps.
 
 #### Observabilidade
 
-Aqui eu sou a favor de guardar todos os logs da solução, pelo menos por um período relevante de tempo (com relevante eu quero dizer um período suficiente para identificar mudanças de comportamento da solução, mas não exagerado a ponto de afetar na memória ou armazenamento do ambiente)
+Aprofundando no tema observabilidade, além de permitir monitorar o comportamento e resultados do modelo, de forma que é possível identificar um momento que aconteçam falhas na operação por uma mudança na característica dos dados de entrada e, com isso, retornar à etapa de levantamento de requisitos para possibilitar a criação de uma nova versão estruturada da solução com boas práticas de desenvolvimento de soluções baseadas em IA, a ideia é monitorar a saúde do ambiente, em um ambiente produtivo, entendo que métricas de IOPS são importantes para verificar a disponibilidade do sistema, além de verificar latência da resposta, monitorar o comportamento de cada função por meio de logs ajuda a rastrear possíveis erros e corrigir de forma mais assertiva.
 
-Nesse caso, aqui eu não necessariamente guardaria o resultado dos modelos, manteria isso em versionamento com a aplicação de conceitos de MLOps para definir o desenvolvimento e lançamento de versões diferentes do modelo, mas guardaria as informações de execução em cada uma das funções e APIs da solução completa.
+Aqui eu sou a favor de guardar todos os logs da solução, pelo menos por um período relevante de tempo (com relevante eu quero dizer um período suficiente para identificar mudanças de comportamento da solução, mas não exagerado a ponto de afetar na memória ou armazenamento do ambiente), guardaria as informações de execução em cada uma das funções e APIs da solução completa, IOPS e avaliações do modelo.
 
 Aqui, com informações de execução eu quero dizer:
 - Entrada e saída da função ou API
@@ -227,11 +229,12 @@ Devido à quantidade de amostras disponíveis, a modelagem da solução foi a **
 - **Fine-tuning**: pensando em uma solução já escalada com volumes de dados mais expressivos
 - Caso a ideia seja utilizar modelos mais clássicos de classificação, também é possível utilizar modelos de NLP classificados com métodos mais clássicos de ML. Solução essa também pensada para cenários mais escalados devido o volume de dados necessário para possibilitar o treinamento e teste do modelo mais clássico
 
-### Confiança e fallback
-- Adicionar um campo `confidence` ao response (pedir ao LLM que retorne JSON com `label` + `confidence`)
-- Mensagens com `confidence < 0.7` → fila para revisão humana
-
 ### Escalabilidade
-- Cache por hash do texto para mensagens repetidas
-- Rate limiting no endpoint
-- Deploy em container (Docker) com health check no `/health`
+
+Para pensar em escalabilidade em um sistema, as boas práticas começam por evitar gargalos antes de aumentar a complexidade. Nesse caso, antes de escalar o serviço, buscaria melhorar a escalabilidade horizontal da solução permitindo, por exemplo a utilização do serviço por vários usuários simultâneos na criação de uma solução que não guarda o estado do usuário na memória da solução, mas mantendo registro da sessão em um banco ou em cache, otimizar consultas com índices, paginação e modelagem de dados. 
+
+Outro ponto é aumentar a especialização dos componentes do sistema e não criar monolitos. Comunicar componentes de forma inteligente e separar as responsabilidades, além de permitir controle de erros mais preciso, ajuda na manutenção e melhoria da solução em partes, bem como testes e pipelines de CI/CD mais precisas.
+
+Além disso, implementar processamento assíncrono para tarefas que não precisam acontecer imediatamente, como envio de e-mails, geração de relatórios e integrações com outros serviços, usando filas para não sobrecarregar o fluxo principal da aplicação e mecanismos de resiliência (timeout, retry com backoff, circuit breaker e rate limiting) para evitar falhas em cascata e manter o sistema estável mesmo sob picos de uso ou problemas externos.
+
+Manter o processo de MLOps funcional ajuda a garantir a escalabilidade do sistema. É fundamental ter observabilidade e logs estruturados, métricas, alertas e testes de carga para identificar gargalos na aplicação e, finalizando, a verificação de saúde da API com um health check no endpoint /health também é uma prática importante para monitorar rapidamente se o serviço está disponível e funcionando corretamente, não seria necessário implementar para todas as integrações, mas para a API principal do sistema.
