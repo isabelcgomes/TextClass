@@ -95,7 +95,8 @@ Healthcheck da API.
 
 ## Interface
 
-A interface da aplicação no Gradio é dividida em duas abas.
+A interface da aplicação no Gradio (`http://localhost:7860`). é dividida em duas abas.
+
 
 ### Classificação
 
